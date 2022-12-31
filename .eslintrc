@@ -1,0 +1,58 @@
+{
+	"parser": "@typescript-eslint/parser", // Specifies the ESLint parser
+	"parserOptions": {
+		"ecmaVersion": 2018, // Allows for the parsing of modern ECMAScript features
+		"sourceType": "module" // Allows for the use of imports
+	},
+	"extends": [
+		"plugin:@typescript-eslint/recommended", // Uses the recommended rules from the @typescript-eslint/eslint-plugin
+		// "prettier/@typescript-eslint", // Uses eslint-config-prettier to disable ESLint rules from @typescript-eslint/eslint-plugin that would conflict with prettier
+		"plugin:prettier/recommended"
+	],
+	"rules": {
+		// Place to specify ESLint rules. Can be used to overwrite rules specified from the extended configs
+		// e.g. "@typescript-eslint/explicit-function-return-type": "off",
+		"@typescript-eslint/no-empty-function": ["error", { "allow": ["private-constructors"] }],
+		"prettier/prettier": [
+			//These overrides .prettierrc.json
+			"error",
+			{
+				"printWidth": 125,
+				"singleQuote": true,
+				"arrowParens": "always",
+				"trailingComma": "all"
+			}
+		],
+		"curly": "error",
+		"default-case-last": ["error"],
+		"default-param-last": ["error"],
+		"id-length": ["error", { "min": 3, "properties": "never", "exceptions": ["id"] }],
+		"no-duplicate-imports": "error",
+		"no-lone-blocks": "error",
+		"no-lonely-if": "error",
+		"no-multiple-empty-lines": ["error", { "max": 2, "maxEOF": 1 }],
+		"no-param-reassign": ["error", { "props": true }],
+		"no-return-assign": "error",
+		"no-shadow": ["error", { "allow": [], "builtinGlobals": false, "hoist": "functions" }],
+		"no-unmodified-loop-condition": "error",
+		"no-use-before-define": "error",
+		"no-useless-concat": "error",
+		"no-useless-computed-key": "error",
+		"no-useless-constructor": "error",
+		"object-shorthand": "error",
+		"no-fallthrough": "error",
+		"prefer-destructuring": [
+			"error",
+			{
+				"AssignmentExpression": { "array": true, "object": false },
+				"VariableDeclarator": { "array": false, "object": true }
+			},
+			{ "enforceForRenamedProperties": true }
+		],
+		"prefer-template": "error",
+		"no-return-await": "error",
+		"require-await": "error",
+		"sort-vars": "error",
+		"spaced-comment": "error"
+	}
+}
