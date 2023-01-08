@@ -12,13 +12,37 @@ export class AutoTraderServer {
   private static readonly stocksData: StockInputType[] = [
     {
       symbol: 'NIFTY',
-      expiry: '05-Jan-2023',
+      expiry: '12-Jan-2023',
       strikeRange: 10, // 10 strikes above and below data
       strikePriceStep: 50,
     },
     {
       symbol: 'BANKNIFTY',
-      expiry: '05-Jan-2023',
+      expiry: '12-Jan-2023',
+      strikeRange: 10,
+      strikePriceStep: 100,
+    },
+    {
+      symbol: 'NIFTY',
+      expiry: '19-Jan-2023',
+      strikeRange: 10, // 10 strikes above and below data
+      strikePriceStep: 50,
+    },
+    {
+      symbol: 'BANKNIFTY',
+      expiry: '19-Jan-2023',
+      strikeRange: 10,
+      strikePriceStep: 100,
+    },
+    {
+      symbol: 'NIFTY',
+      expiry: '25-Jan-2023',
+      strikeRange: 10, // 10 strikes above and below data
+      strikePriceStep: 50,
+    },
+    {
+      symbol: 'BANKNIFTY',
+      expiry: '25-Jan-2023',
       strikeRange: 10,
       strikePriceStep: 100,
     },

@@ -27,6 +27,7 @@ export class StockSignals {
   private currentTime: string;
   private currentDate: string;
   private recordTime: string;
+  private autoFillExpiries: boolean;
 
   private readonly METADATA_FOLDER_NAME = 'metadata';
   private readonly DATA_FOLDER_NAME = 'data';
@@ -36,11 +37,18 @@ export class StockSignals {
   private readonly TIME_SERIES_OPTION_METRICS_CSV_FILE_NAME = 'timeSeries.csv';
   private readonly TIME_SERIES_OPTION_METRICS_JSON_FILE_NAME = 'timeSeries.json';
 
-  constructor(symbol: string, expiryDate: string, strikeRangeLimit?: number, strikePriceStep?: number) {
+  constructor(
+    symbol: string,
+    expiryDate: string,
+    autoFillExpiries?: boolean,
+    strikeRangeLimit?: number,
+    strikePriceStep?: number,
+  ) {
     this.symbol = symbol;
     this.expiryDate = expiryDate;
     this.strikeRangeLimit = strikeRangeLimit ?? 10;
     this.strikePriceStep = strikePriceStep ?? 100;
+    this.autoFillExpiries = autoFillExpiries ?? false;
 
     this.currentTime = getTimeSeriesDataEntryCurrentTime();
     this.currentDate = getCurrentDataForFileName();
@@ -79,7 +87,7 @@ export class StockSignals {
       recordTime: this.recordTime,
     });
 
-    stockMetricsRepository.createStockMetricsEntry(optionsChainDataWithMetricsAndMetadata);
+    await stockMetricsRepository.createStockMetricsEntry(optionsChainDataWithMetricsAndMetadata);
 
     fs.writeFileSync(this.optionsChainDataFileName, JSON.stringify(optionsChainDataWithMetrics, null, 2));
 

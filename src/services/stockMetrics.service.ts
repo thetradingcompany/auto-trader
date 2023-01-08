@@ -86,13 +86,13 @@ export class StockMetrics {
     putSideSignal,
   }: GetDefaultPriceActionSignalFromCurrentStrikeImplementationsInput): OptionsSignalEnum {
     if (callSideSignal === OptionsSignalEnum.UP && putSideSignal === OptionsSignalEnum.UP) {
-      return OptionsSignalEnum.UP_PLUS;
+      return OptionsSignalEnum.UP;
     } else if (callSideSignal === OptionsSignalEnum.UP && putSideSignal === OptionsSignalEnum.DOWN) {
       return OptionsSignalEnum.NEUTRAL;
     } else if (callSideSignal === OptionsSignalEnum.DOWN && putSideSignal === OptionsSignalEnum.UP) {
       return OptionsSignalEnum.NEUTRAL;
     } else if (callSideSignal === OptionsSignalEnum.DOWN && putSideSignal === OptionsSignalEnum.DOWN) {
-      return OptionsSignalEnum.DOWN_PLUS;
+      return OptionsSignalEnum.DOWN;
     }
 
     return OptionsSignalEnum.NEUTRAL;
