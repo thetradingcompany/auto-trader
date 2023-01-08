@@ -3,46 +3,23 @@ import { StockSignals } from './../services/stockSignals.service';
 
 export type StockInputType = {
   symbol: string;
-  expiry: string;
+  autoFillExpiries?: boolean;
   strikeRange?: number;
   strikePriceStep?: number;
+  expiry?: string;
 };
 
 export class AutoTraderServer {
   private static readonly stocksData: StockInputType[] = [
     {
       symbol: 'NIFTY',
-      expiry: '12-Jan-2023',
+      autoFillExpiries: true,
       strikeRange: 10, // 10 strikes above and below data
       strikePriceStep: 50,
     },
     {
       symbol: 'BANKNIFTY',
-      expiry: '12-Jan-2023',
-      strikeRange: 10,
-      strikePriceStep: 100,
-    },
-    {
-      symbol: 'NIFTY',
-      expiry: '19-Jan-2023',
-      strikeRange: 10, // 10 strikes above and below data
-      strikePriceStep: 50,
-    },
-    {
-      symbol: 'BANKNIFTY',
-      expiry: '19-Jan-2023',
-      strikeRange: 10,
-      strikePriceStep: 100,
-    },
-    {
-      symbol: 'NIFTY',
-      expiry: '25-Jan-2023',
-      strikeRange: 10, // 10 strikes above and below data
-      strikePriceStep: 50,
-    },
-    {
-      symbol: 'BANKNIFTY',
-      expiry: '25-Jan-2023',
+      autoFillExpiries: true,
       strikeRange: 10,
       strikePriceStep: 100,
     },
@@ -51,8 +28,8 @@ export class AutoTraderServer {
   private static readonly runFrequency = 5 * 60 * 1000;
 
   private static async processStockData(stockData: StockInputType): Promise<void> {
-    const { symbol, expiry, strikeRange, strikePriceStep } = stockData;
-    const stockSignals = new StockSignals(symbol, expiry, strikeRange, strikePriceStep);
+    const { symbol, autoFillExpiries, strikeRange, strikePriceStep } = stockData;
+    const stockSignals = new StockSignals(symbol, autoFillExpiries, strikeRange, strikePriceStep);
     await stockSignals.populateOptionsChainSignalsData();
 
     return;

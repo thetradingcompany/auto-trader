@@ -5,11 +5,32 @@ import {
   OptionsChainDataWithMetricsType,
 } from './../types/optionsData.type';
 
+export interface FetchOptionsDataPayload {
+  optionsData: Record<string, any>;
+  symbolStrikePrice: number; // Current price
+  symbolStrikePrices: number[];
+  validExpiryDates: string[];
+}
+
+export interface PopulateOptionsChainSignalsDataForExpiryInput {
+  optionsData: Record<string, any>;
+  symbolStrikePrice: number;
+  symbolStrikePrices: number[];
+  expiryDate: string;
+  currentVIXValue: number;
+}
+
+export interface ProcessOptionsDataInput {
+  optionsData: Record<string, any>;
+  symbolStrikePrice: number;
+  symbolStrikePrices: number[];
+  expiryDate: string;
+}
+
 export interface ProcessOptionsDataPayload {
   callOptionsData: OptionChainEntryType[];
   putOptionsData: OptionChainEntryType[];
   atmStrikePrice: number; // At the money strike price
-  symbolStrikePrice: number; // Current price
 }
 
 export interface GetFilteredOptionsChainDataByStrikeInput {
