@@ -70,6 +70,7 @@ export interface AddMetricsToOptionsChainDataInput {
   currentVIXValue: number;
   strikePriceStep: number;
   atmStrikePrice: number;
+  symbolStrikePrice: number;
 }
 
 export interface AddMetadataToOptionsDataInput {

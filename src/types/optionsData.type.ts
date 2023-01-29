@@ -1,7 +1,10 @@
-import { MarketSignalEnum } from './../enums/marketSignal.enum';
-import { StrikePriceInterpretationsEnum } from './../enums/strikePriceInterpretations.enum';
-import { OptionsSignalEnum } from './../enums/optionsSignal.enum';
+import { COA1SupportFromEnum } from './../enums/coa1SupportFrom.enum';
 import { Index, prop as Property } from '@typegoose/typegoose';
+import { COA1DirectionalSignalEnum } from './../enums/coa1DirectionalSignal.enum';
+import { COA1SignalEnum } from './../enums/coa1Signal.enum';
+import { MarketSignalEnum } from './../enums/marketSignal.enum';
+import { OptionsSignalEnum } from './../enums/optionsSignal.enum';
+import { StrikePriceInterpretationsEnum } from './../enums/strikePriceInterpretations.enum';
 
 export type NSEOptionDataEntryType = {
   strikePrice: number;
@@ -74,6 +77,53 @@ export class OptionsChainDataType {
   byStrikes: CombinedOptionsDataEntryWithMetricsType[];
 }
 
+export class ChartOfAccuracy1MetricsType {
+  @Property({ type: String, enum: COA1SignalEnum })
+  COA1Signal: COA1SignalEnum;
+
+  @Property({ type: Number })
+  callSideStrikeWithHighestVolume: number;
+
+  @Property({ type: Number })
+  putSideStrikeWithHighestVolume: number;
+
+  @Property({ type: Number })
+  callSideStrikeWithSecondHighestVolume: number;
+
+  @Property({ type: Number })
+  putSideStrikeWithSecondHighestVolume: number;
+
+  @Property({ type: Number })
+  callSideStrikeWithHighestOI: number;
+
+  @Property({ type: Number })
+  putSideStrikeWithHighestOI: number;
+
+  @Property({ type: Number })
+  callSideStrikeWithSecondHighestOI: number;
+
+  @Property({ type: Number })
+  putSideStrikeWithSecondHighestOI: number;
+
+  @Property({ type: String, enum: COA1DirectionalSignalEnum })
+  callSideCOA1DirectionalSignal: COA1DirectionalSignalEnum;
+
+  @Property({ type: String, enum: COA1DirectionalSignalEnum })
+  putSideCOA1DirectionalSignal: COA1DirectionalSignalEnum;
+
+  @Property({ type: Number })
+  callSideITMStrikePrice: number;
+
+  @Property({ type: Number })
+  putSideITMStrikePrice: number;
+
+  @Property({ type: String, enum: COA1SupportFromEnum })
+  callSideSupportFrom: COA1SupportFromEnum;
+
+  @Property({ type: String, enum: COA1SupportFromEnum })
+  putSideSupportFrom: COA1SupportFromEnum;
+}
+
 export class OptionsChainDataWithMetricsType extends OptionsChainDataType {
   @Property({ type: Number })
   totalChangeInCE: number;
@@ -110,6 +160,9 @@ export class OptionsChainDataWithMetricsType extends OptionsChainDataType {
 
   @Property({ type: Number })
   vwapSignal?: number;
+
+  @Property({ type: ChartOfAccuracy1MetricsType, _id: false })
+  COA1Metrics: ChartOfAccuracy1MetricsType;
 }
 
 @Index({ symbol: 1, recordTime: -1 })

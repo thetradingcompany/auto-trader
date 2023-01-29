@@ -137,6 +137,7 @@ export class StockSignals {
       currentVIXValue,
       strikePriceStep: this.strikePriceStep,
       atmStrikePrice,
+      symbolStrikePrice,
     });
 
     const optionsChainDataWithMetricsAndMetadata = addMetadataToOptionsData({

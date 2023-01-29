@@ -14,9 +14,9 @@ import {
   CombinedOptionsDataEntryWithMetricsType,
   OptionChainEntryType,
   OptionChainEntryWithMetricsType,
-  OptionsChainDataType,
   OptionsChainDataWithMetricsType,
 } from './../../types/optionsData.type';
+import { getChartOfAccuracy1Metrics } from './chartOfAccuracy1.util';
 import { getStrikePriceRangeFromVIXValue } from './getStrikePriceRangeFromVIXValue.util';
 
 /**
@@ -149,6 +149,7 @@ export function addMetricsToOptionsChainData({
   currentVIXValue,
   strikePriceStep,
   atmStrikePrice,
+  symbolStrikePrice,
 }: AddMetricsToOptionsChainDataInput): OptionsChainDataWithMetricsType {
   // CE Metrics
   const ceTotalChangeInOI = callOptionsData.reduce((total, ceData) => {
@@ -204,6 +205,8 @@ export function addMetricsToOptionsChainData({
     sidewaysSignalsPercentage,
   });
 
+  const COA1Metrics = getChartOfAccuracy1Metrics({ symbolStrikePrice, atmStrikePrice, strikePriceStep, optionsChainData });
+
   return {
     ...optionsChainData,
     totalChangeInCE: ceTotalChangeInOI,
@@ -215,5 +218,6 @@ export function addMetricsToOptionsChainData({
     marketSignal: overallMarketSignal,
     vixUpperStrike: upperStrikePrice,
     vixLowerStrike: lowerStrikePrice,
+    COA1Metrics,
   };
 }
