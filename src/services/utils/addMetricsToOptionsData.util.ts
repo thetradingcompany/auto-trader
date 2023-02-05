@@ -150,6 +150,7 @@ export function addMetricsToOptionsChainData({
   strikePriceStep,
   atmStrikePrice,
   symbolStrikePrice,
+  COA1SupportsFileName,
 }: AddMetricsToOptionsChainDataInput): OptionsChainDataWithMetricsType {
   // CE Metrics
   const ceTotalChangeInOI = callOptionsData.reduce((total, ceData) => {
@@ -205,7 +206,13 @@ export function addMetricsToOptionsChainData({
     sidewaysSignalsPercentage,
   });
 
-  const COA1Metrics = getChartOfAccuracy1Metrics({ symbolStrikePrice, atmStrikePrice, strikePriceStep, optionsChainData });
+  const COA1Metrics = getChartOfAccuracy1Metrics({
+    symbolStrikePrice,
+    atmStrikePrice,
+    strikePriceStep,
+    optionsChainData,
+    COA1SupportsFileName,
+  });
 
   return {
     ...optionsChainData,

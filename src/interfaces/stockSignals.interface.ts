@@ -71,6 +71,7 @@ export interface AddMetricsToOptionsChainDataInput {
   strikePriceStep: number;
   atmStrikePrice: number;
   symbolStrikePrice: number;
+  COA1SupportsFileName: string;
 }
 
 export interface AddMetadataToOptionsDataInput {

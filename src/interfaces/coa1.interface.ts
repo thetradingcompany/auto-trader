@@ -6,6 +6,7 @@ export interface GetChartOfAccuracy1MetricsInput {
   atmStrikePrice: number;
   strikePriceStep: number;
   optionsChainData: OptionsChainDataType;
+  COA1SupportsFileName: string;
 }
 
 export interface GetCOA1SupportFromMetricInput {

@@ -166,7 +166,7 @@ export class OptionsChainDataWithMetricsType extends OptionsChainDataType {
 }
 
 @Index({ symbol: 1, recordTime: -1 })
-@Index({ recordTime: 1 }, { expireAfterSeconds: 24 * 60 * 60 })
+@Index({ recordTime: 1 }, { expireAfterSeconds: 16 * 60 * 60 })
 export class OptionsChainDataWithMetricsAndMetadataType extends OptionsChainDataWithMetricsType {
   @Property({ type: String })
   symbol: string;

@@ -44,6 +44,7 @@ export class StockSignals {
   private readonly OPTIONS_CHAIN_DATA_FILE_NAME = 'optionsChainData.json';
   private readonly TIME_SERIES_OPTION_METRICS_CSV_FILE_NAME = 'timeSeries.csv';
   private readonly TIME_SERIES_OPTION_METRICS_JSON_FILE_NAME = 'timeSeries.json';
+  private readonly CHART_OF_ACCURACY_1_SUPPORTS_FILENAME = 'coe1Supports.json';
 
   constructor(
     symbol: string,
@@ -114,6 +115,8 @@ export class StockSignals {
     expiryDate,
     currentVIXValue,
   }: PopulateOptionsChainSignalsDataForExpiryInput): Promise<void> {
+    const COA1SupportsFileName = this.getCOA1SupportsJSONFileName(expiryDate);
+
     const processedOptionsData = this.processOptionsData({
       optionsData,
       symbolStrikePrice,
@@ -138,6 +141,7 @@ export class StockSignals {
       strikePriceStep: this.strikePriceStep,
       atmStrikePrice,
       symbolStrikePrice,
+      COA1SupportsFileName,
     });
 
     const optionsChainDataWithMetricsAndMetadata = addMetadataToOptionsData({
@@ -274,5 +278,9 @@ export class StockSignals {
 
   private get timeSeriesOptionMetricsJSONFileName(): string {
     return `${this.DATA_FOLDER_NAME}/${this.symbol}_${this.currentDate}_${this.TIME_SERIES_OPTION_METRICS_JSON_FILE_NAME}`;
+  }
+
+  private getCOA1SupportsJSONFileName(expiryDate: string): string {
+    return `${this.DATA_FOLDER_NAME}/${this.symbol}_${expiryDate}_${this.currentDate}_${this.CHART_OF_ACCURACY_1_SUPPORTS_FILENAME}`;
   }
 }

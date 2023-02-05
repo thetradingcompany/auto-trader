@@ -5,6 +5,7 @@
     "main": "index.js",
     "scripts": {
         "start": "tsc && node dist/index",
+        "clean-start": "rm -rf data/* && npm run start",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "keywords": [],

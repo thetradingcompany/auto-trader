@@ -7,6 +7,7 @@ import {
   GetCOA1SupportFromMetricInput,
 } from './../../interfaces/coa1.interface';
 import { ChartOfAccuracy1MetricsType } from './../../types/optionsData.type';
+import * as fs from 'fs';
 
 export const JUMP_TO_NEXT_BEST_STRIKE_PRICE_ON_PERCENT_DIFF_LTE = 20;
 
@@ -31,7 +32,6 @@ function getCOA1SupportFromMetric({
 }: GetCOA1SupportFromMetricInput): COA1SupportFromEnum {
   let supportFrom: COA1SupportFromEnum;
   if (strikeWithHighestVolume === strikeWithHighestOI) {
-    // strong resistance
     supportFrom = COA1SupportFromEnum.BOTH;
   } else if (Math.abs(strikeWithHighestVolume - ITMStrikePrice) < Math.abs(strikeWithHighestOI - ITMStrikePrice)) {
     supportFrom = COA1SupportFromEnum.VOLUME;
@@ -109,6 +109,7 @@ export function getChartOfAccuracy1Metrics({
   atmStrikePrice,
   strikePriceStep,
   optionsChainData,
+  COA1SupportsFileName,
 }: GetChartOfAccuracy1MetricsInput): ChartOfAccuracy1MetricsType {
   let callSideITMStrikePrice: number, putSideITMStrikePrice: number;
 
@@ -166,17 +167,41 @@ export function getChartOfAccuracy1Metrics({
   const putSideStrikeWithHighestOI = putSideOIToStrikePriceMap.get(putSideMaxOI) ?? -1;
   const putSideStrikeWithSecondHighestOI = putSideOIToStrikePriceMap.get(putSideSecondMaxOI) ?? -1;
 
-  const callSideSupportFrom = getCOA1SupportFromMetric({
+  let callSideSupportFrom = getCOA1SupportFromMetric({
     strikeWithHighestVolume: callSideStrikeWithHighestVolume,
     strikeWithHighestOI: callSideStrikeWithHighestOI,
     ITMStrikePrice: callSideITMStrikePrice,
   });
-
-  const putSideSupportFrom = getCOA1SupportFromMetric({
+  let putSideSupportFrom = getCOA1SupportFromMetric({
     strikeWithHighestVolume: putSideStrikeWithHighestVolume,
     strikeWithHighestOI: putSideStrikeWithHighestOI,
     ITMStrikePrice: putSideITMStrikePrice,
   });
+
+  // TODO: Do this via db call
+  if (fs.existsSync(COA1SupportsFileName)) {
+    const { callSideSupportFrom: parsedCallSideSupportFrom, putSideSupportFrom: parsedPutSideSupportFrom } = JSON.parse(
+      fs.readFileSync(COA1SupportsFileName).toString(),
+    );
+
+    if (parsedCallSideSupportFrom !== COA1SupportFromEnum.BOTH) {
+      callSideSupportFrom = parsedCallSideSupportFrom;
+    } else {
+      fs.writeFileSync(COA1SupportsFileName, JSON.stringify({ callSideSupportFrom, putSideSupportFrom }, null, 2), {
+        flag: 'w',
+      });
+    }
+
+    if (parsedPutSideSupportFrom !== COA1SupportFromEnum.BOTH) {
+      putSideSupportFrom = parsedPutSideSupportFrom;
+    } else {
+      fs.writeFileSync(COA1SupportsFileName, JSON.stringify({ callSideSupportFrom, putSideSupportFrom }, null, 2), {
+        flag: 'w',
+      });
+    }
+  } else {
+    fs.writeFileSync(COA1SupportsFileName, JSON.stringify({ callSideSupportFrom, putSideSupportFrom }, null, 2));
+  }
 
   // find percentage difference of highest and second highest
   const isCallSideMaxVolumeWeak = isMaxDataStrikePriceWeak(callSideMaxVolume, callSideSecondMaxVolume);
