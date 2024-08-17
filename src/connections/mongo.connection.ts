@@ -1,7 +1,6 @@
 import mongoose from 'mongoose';
 
-const mongoURI =
-  'mongodb+srv://autotrader:autotrader2711@autotrader.flawd1f.mongodb.net/daily-metrics?retryWrites=true&w=majority';
+const mongoURI = process.env.MONGODB_URI ?? 'mongodb://localhost:27017';
 
 // CONNECTION EVENTS
 mongoose.connection.on('connected', () => {

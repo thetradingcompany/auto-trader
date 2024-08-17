@@ -6,3 +6,4 @@ dist
 data
 metadata
 legacy.ts
+.env
